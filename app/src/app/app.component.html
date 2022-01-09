@@ -1,12 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="d-flex justify-content-end">
-    <button *ngIf="appService.accounts.length==0" class="btn btn-outline-primary" (click)="connectWallet()"> Connect
-      Wallet</button>
-    <ng-container *ngIf="appService.accounts.length>0">
+<ng-container *ngIf="loading; else app">
+  <spinner></spinner>
+</ng-container>
+<ng-template #app>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="d-flex justify-content-end">
+      <button *ngIf="appService.accounts.length==0" class="btn btn-outline-primary" (click)="connectWallet()"> Connect
+        Wallet</button>
+      <ng-container *ngIf="appService.accounts.length>0">
 
-      <span style="color: white;"> Account : {{appService.accounts[0]}}</span>
-      <i class="fas fa-wallet" style="color: white;"></i>
-      <span style="color: white;"> Balance:{{appService.balance}} </span>
-    </ng-container>
-  </div>
-</nav>
+        <span style="color: white;"> Account : {{appService.accounts[0]}}</span>
+        <i class="fas fa-wallet" style="color: white;"></i>
+        <span style="color: white;"> Balance:{{appService.balance}} </span>
+      </ng-container>
+    </div>
+  </nav>
+</ng-template>

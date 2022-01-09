@@ -7,10 +7,11 @@ declare const window: any;
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  loading = false;
   title = 'app';
   constructor(public appService: AppService) {
     this.checkMetamask();
-    this.appService.getWalletDetails();
+    this.fetchDetails();
   }
   checkMetamask() {
     if (window.ethereum || window.web3) {
@@ -22,12 +23,21 @@ export class AppComponent {
     console.log(window.ethereum)
   }
   async connectWallet() {
+    this.loading = true;
     try {
       await window.ethereum.enable();
-      this.appService.getWalletDetails();
+      this.fetchDetails();
+      this.loading = false;
     } catch (error) {
       console.log(error);
+      this.loading = false;
     }
+  }
+  fetchDetails() {
+    this.loading = true;
+    this.appService.getWalletDetails().then(() => {
+      this.loading = false;
+    });
   }
 
 }
