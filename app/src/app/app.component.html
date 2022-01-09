@@ -7,11 +7,21 @@
       <button *ngIf="appService.accounts.length==0" class="btn btn-outline-primary" (click)="connectWallet()"> Connect
         Wallet</button>
       <ng-container *ngIf="appService.accounts.length>0">
-
+        <img height="30" width="30" [src]="appService.imageData">
         <span style="color: white;"> Account : {{appService.accounts[0]}}</span>
         <i class="fas fa-wallet" style="color: white;"></i>
         <span style="color: white;"> Balance:{{appService.balance}} </span>
       </ng-container>
     </div>
   </nav>
+  <div class="row ">
+    <div class="d-flex justify-content-center">
+      <div class="card text-center mt-5" style="width: 18rem;">
+        <div class="card-body">
+          This is some text within a card body.
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ng-template>
