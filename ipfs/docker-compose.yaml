@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  ipfs_host:
+    image: ipfs/go-ipfs
+    restart: always
+    volumes:
+      - ./data:/data/ipfs
+      - ./export:/export
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+      - "4001:4001"
