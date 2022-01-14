@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import { create } from 'ipfs-http-client'
 declare const window: any;
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   constructor(public appService: AppService) {
     this.checkMetamask();
     this.fetchDetails();
+    this.addFiles();
   }
   checkMetamask() {
     if (window.ethereum || window.web3) {
@@ -38,6 +40,18 @@ export class AppComponent {
     this.appService.getWalletDetails().then(() => {
       this.loading = false;
     });
+  }
+  async addFiles() {
+    const client = create({ url: "http://localhost:5001/api/v0" });
+    client.add({
+      path: "test.txt",
+      content: "This is test file"
+    }).then(data => {
+      console.log(data.cid.toString());
+      console.log(data.path);
+      console.log(data.path);
+    });
+
   }
 
 }
