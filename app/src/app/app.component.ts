@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { create } from 'ipfs-http-client'
+import { ToastrService } from 'ngx-toastr';
 declare const window: any;
 @Component({
   selector: 'app-root',
@@ -11,18 +12,22 @@ export class AppComponent {
   loading = false;
   title = 'app';
   public fileBuffer: any;
-  constructor(public appService: AppService) {
+  constructor(
+    public appService: AppService,
+    private toastrService: ToastrService
+  ) {
     this.checkMetamask();
-    this.fetchDetails();
   }
   checkMetamask() {
-    if (window.ethereum || window.web3) {
-      console.log("metamask installed");
+    if (typeof window.ethereum == 'undefined') {
+      this.toastrService.success('Hello world!', 'Toastr fun!');
+      console.log("am here")
     }
     else {
-      console.log("metamask not installed");
+      console.log("else")
+      this.fetchDetails();
+      this.toastrService.success('Hello world!', 'Toastr fun!');
     }
-    console.log(window.ethereum)
   }
   async connectWallet() {
     this.loading = true;
@@ -35,6 +40,7 @@ export class AppComponent {
       this.loading = false;
     }
   }
+
   fetchDetails() {
     this.loading = true;
     this.appService.getWalletDetails().then(() => {

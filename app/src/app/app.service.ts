@@ -19,6 +19,5 @@ export class AppService {
       this.imageData = new Identicon(this.accounts[0], 30).toString();
       this.imageData = "data:image/png;base64," + this.imageData;
     }
-    console.log(provider);
   }
 }

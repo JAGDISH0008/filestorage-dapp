@@ -5,6 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { SpinnerModule } from './spinner/spinner.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +17,9 @@ import { SpinnerModule } from './spinner/spinner.module';
   imports: [
     BrowserModule,
     SpinnerModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
   ],
   providers: [AppService],
   bootstrap: [AppComponent]
