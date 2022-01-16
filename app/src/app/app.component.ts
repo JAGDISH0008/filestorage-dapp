@@ -10,10 +10,10 @@ declare const window: any;
 export class AppComponent {
   loading = false;
   title = 'app';
+  public fileBuffer: any;
   constructor(public appService: AppService) {
     this.checkMetamask();
     this.fetchDetails();
-    this.addFiles();
   }
   checkMetamask() {
     if (window.ethereum || window.web3) {
@@ -41,17 +41,22 @@ export class AppComponent {
       this.loading = false;
     });
   }
-  async addFiles() {
-    const client = create({ url: "http://localhost:5001/api/v0" });
-    client.add({
-      path: "test.txt",
-      content: "This is test file"
-    }).then(data => {
+
+  upload() {
+    const client = create({ url: "https://ipfs.infura.io:5001/api/v0" });
+    client.add(this.fileBuffer).then(data => {
       console.log(data.cid.toString());
       console.log(data.path);
       console.log(data.path);
     });
+  }
 
+  async handleFileInput(files: FileList) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(files[0]);
+    reader.onload = (e) => {
+      this.fileBuffer = Buffer.from(reader.result);
+    }
   }
 
 }
