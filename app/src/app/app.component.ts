@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { create } from 'ipfs-http-client'
 import { ToastrService } from 'ngx-toastr';
+import { Utils } from '../utils/util';
 declare const window: any;
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   loading = false;
   title = 'app';
   public fileBuffer: any;
+  public utils = new Utils();
   constructor(
     public appService: AppService,
     private toastrService: ToastrService
@@ -32,15 +34,20 @@ export class AppComponent {
       await window.ethereum.enable();
       this.fetchDetails();
       this.loading = false;
+      this.toastrService.success("Connected to Metamask");
     } catch (error) {
-      console.log(error);
       this.loading = false;
+      this.toastrService.error("Error connecting to Metamask");
+
     }
   }
 
   fetchDetails() {
     this.loading = true;
     this.appService.getWalletDetails().then(() => {
+      if (this.appService.network?.chainId != 4) {
+        this.toastrService.info('Please switch to Rinkeby test network');
+      }
       this.loading = false;
     });
   }
