@@ -16,17 +16,14 @@ export class AppComponent {
     public appService: AppService,
     private toastrService: ToastrService
   ) {
-    this.checkMetamask();
+    this.init();
   }
-  checkMetamask() {
+  init() {
     if (typeof window.ethereum == 'undefined') {
-      this.toastrService.success('Hello world!', 'Toastr fun!');
-      console.log("am here")
+      this.toastrService.info('Please install Metamask to continue');
     }
     else {
-      console.log("else")
       this.fetchDetails();
-      this.toastrService.success('Hello world!', 'Toastr fun!');
     }
   }
   async connectWallet() {
