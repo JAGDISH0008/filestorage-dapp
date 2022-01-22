@@ -1,8 +1,9 @@
+import { environment } from './../environments/environment';
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
-import { create } from 'ipfs-http-client'
 import { ToastrService } from 'ngx-toastr';
 import { Utils } from '../utils/util';
+import { IpfsService } from './ipfs.service';
 declare const window: any;
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ export class AppComponent {
   public utils = new Utils();
   constructor(
     public appService: AppService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private ipfsService: IpfsService
   ) {
     this.init();
   }
@@ -45,7 +47,7 @@ export class AppComponent {
   fetchDetails() {
     this.loading = true;
     this.appService.getWalletDetails().then(() => {
-      if (this.appService.network?.chainId != 4) {
+      if (this.appService.network?.chainId != environment.chainId) {
         this.toastrService.info('Please switch to Rinkeby test network');
       }
       this.loading = false;
@@ -53,12 +55,7 @@ export class AppComponent {
   }
 
   upload() {
-    const client = create({ url: "https://ipfs.infura.io:5001/api/v0" });
-    client.add(this.fileBuffer).then(data => {
-      console.log(data.cid.toString());
-      console.log(data.path);
-      console.log(data.path);
-    });
+    this.ipfsService.upload(this.fileBuffer);
   }
 
   async handleFileInput(files: FileList) {

@@ -8,6 +8,7 @@ import { SpinnerModule } from './spinner/spinner.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { IpfsService } from './ipfs.service';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
   ],
-  providers: [AppService],
+  providers: [AppService, IpfsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

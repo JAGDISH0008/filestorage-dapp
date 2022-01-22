@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "accounts":"npx hardhat accounts",
-    "compile":"npx hardhat compile",
-    "node":"npx hardhat node"
+    "accounts": "npx hardhat accounts",
+    "compile": "npx hardhat compile",
+    "node": "npx hardhat node"
   },
   "keywords": [],
   "author": "",
