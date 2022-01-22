@@ -5,7 +5,7 @@ contract FileStorage {
     string public name = "File Storage Contract";
     uint256 public filesCount = 0;
 
-    mapping(uint256 => File) public files;
+    mapping(address => File[]) public files;
 
     struct File {
         uint256 id;
@@ -45,20 +45,23 @@ contract FileStorage {
         require(bytes(_description).length > 0);
         require(msg.sender != address(0));
         require(_size > 0);
-        files[filesCount] = File(
-            filesCount,
-            _name,
-            _hash,
-            _description,
-            _size,
-            _type,
-            payable(msg.sender),
-            block.timestamp,
-            block.timestamp
+        uint256 length = files[msg.sender].length + 1;
+        files[msg.sender].push(
+            File(
+                length,
+                _name,
+                _hash,
+                _description,
+                _size,
+                _type,
+                payable(msg.sender),
+                block.timestamp,
+                block.timestamp
+            )
         );
         filesCount++;
         emit FileUploaded(
-            filesCount - 1,
+            length,
             _name,
             _hash,
             _description,
@@ -68,5 +71,13 @@ contract FileStorage {
             block.timestamp,
             block.timestamp
         );
+    }
+
+    function getMyFiles() public view returns (File[] memory) {
+        return files[msg.sender];
+    }
+
+    function getMyFilesCount() public view returns (uint256) {
+        return files[msg.sender].length;
     }
 }

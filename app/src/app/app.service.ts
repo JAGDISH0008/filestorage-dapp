@@ -1,7 +1,10 @@
+import { environment } from './../environments/environment';
 import { Injectable } from "@angular/core";
 import { ethers } from "ethers";
 import Identicon from "identicon.js";
+import { abi } from "./abi/contract_abi";
 declare const window: any;
+
 
 @Injectable()
 export class AppService {
@@ -34,6 +37,20 @@ export class AppService {
         ]
       })
     }
+  }
+
+  uploadToContract(hash, name, size, type, description) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(environment.address, abi.abi, signer);
+    return contract.functions.uploadFile(hash, name, size, type, description)
+  }
+  getFiles() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    const contract = new ethers.Contract(environment.address, abi.abi, provider);
+    console.log(this.accounts[0]);
+    return contract.functions.getMyFiles();
   }
 
 }

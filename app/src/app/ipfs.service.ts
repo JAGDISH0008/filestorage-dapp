@@ -6,10 +6,6 @@ export class IpfsService {
   constructor() { }
   upload(fileBuffer) {
     const client = create({ url: "https://ipfs.infura.io:5001/api/v0" });
-    client.add(fileBuffer).then(data => {
-      console.log(data.cid.toString());
-      console.log(data.path);
-      console.log(data.path);
-    });
+    return client.add(fileBuffer)
   }
 }

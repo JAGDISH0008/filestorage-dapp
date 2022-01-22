@@ -54,8 +54,18 @@ export class AppComponent {
     });
   }
 
-  upload() {
-    this.ipfsService.upload(this.fileBuffer);
+  async upload() {
+    let ipfsData = await this.ipfsService.upload(this.fileBuffer);
+    this.toastrService.success("File uploaded successfully to IPFS");
+    this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', 'test file').then(data => {
+      console.log(data);
+      this.toastrService.success("Saved Hash to contract");
+    })
+  }
+  getFiles() {
+    this.appService.getFiles().then(data => {
+      console.log(data);
+    })
   }
 
   async handleFileInput(files: FileList) {
