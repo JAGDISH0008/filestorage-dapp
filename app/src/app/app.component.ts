@@ -29,6 +29,7 @@ export class AppComponent {
     }
     else {
       this.fetchDetails();
+      this.getFiles();
     }
   }
   async connectWallet() {
@@ -63,12 +64,15 @@ export class AppComponent {
       this.toastrService.success("Saved Hash to contract");
     }).catch(err => {
       this.toastrService.error("Error saving hash to contract");
+    }).finally(() => {
+      this.getFiles();
     })
   }
   getFiles() {
+    this.loading = true;
     this.appService.getMyFiles().then(data => {
       this.myFiles = data[0];
-      console.log(data);
+      this.loading = false;
     })
   }
 

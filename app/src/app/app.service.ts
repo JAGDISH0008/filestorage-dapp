@@ -40,20 +40,20 @@ export class AppService {
   }
 
   uploadToContract(hash, name, size, type, description) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(environment.address, abi.abi, signer);
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = provider.getSigner(this.accounts[0]);
+    let contract = new ethers.Contract(environment.address, abi.abi, signer);
     return contract.functions.uploadFile(hash, name, size, type, description)
   }
   getMyFiles() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(environment.address, abi.abi, provider);
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let contract = new ethers.Contract(environment.address, abi.abi, provider.getSigner(this.accounts[0]));
     return contract.functions.getMyFiles();
   }
 
   getMyFileCount() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const contract = new ethers.Contract(environment.address, abi.abi, provider);
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let contract = new ethers.Contract(environment.address, abi.abi, provider.getSigner(this.accounts[0]));
     return contract.functions.getMyFilesCount();
 
   }
