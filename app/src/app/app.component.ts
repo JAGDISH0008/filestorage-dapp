@@ -30,7 +30,7 @@ export class AppComponent {
     }
     else {
       this.fetchDetails();
-      this.getFiles();
+      // this.getFiles();
     }
   }
   async connectWallet() {
