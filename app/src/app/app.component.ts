@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'app';
   public fileBuffer: any;
   public utils = new Utils();
+  myFiles: any[] = [];
   constructor(
     public appService: AppService,
     private toastrService: ToastrService,
@@ -60,10 +61,13 @@ export class AppComponent {
     this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', 'test file').then(data => {
       console.log(data);
       this.toastrService.success("Saved Hash to contract");
+    }).catch(err => {
+      this.toastrService.error("Error saving hash to contract");
     })
   }
   getFiles() {
-    this.appService.getFiles().then(data => {
+    this.appService.getMyFiles().then(data => {
+      this.myFiles = data[0];
       console.log(data);
     })
   }

@@ -47,4 +47,34 @@
     </div>
   </div>
 
+  <div class="card text-center mt-5">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Hash</th>
+            <th scope="col">Description</th>
+            <th scope="col">Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="myFiles.length>0;else nofiles">
+            <tr *ngFor="let file of myFiles;let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td> <a href="https://ipfs.io/ipfs/{{file[2]}}?fileName={{file[2]}}" target="_blank">{{file[2]}}</a></td>
+              <td>{{file[3]}}</td>
+              <td>{{file[4]}} Kb</td>
+            </tr>
+          </ng-container>
+          <ng-template #nofiles>
+            <td colspan="4">
+              <h3>No Files Found</h3>
+            </td>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </ng-template>

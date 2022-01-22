@@ -45,12 +45,17 @@ export class AppService {
     const contract = new ethers.Contract(environment.address, abi.abi, signer);
     return contract.functions.uploadFile(hash, name, size, type, description)
   }
-  getFiles() {
+  getMyFiles() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const signer = provider.getSigner();
     const contract = new ethers.Contract(environment.address, abi.abi, provider);
-    console.log(this.accounts[0]);
     return contract.functions.getMyFiles();
+  }
+
+  getMyFileCount() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(environment.address, abi.abi, provider);
+    return contract.functions.getMyFilesCount();
+
   }
 
 }
