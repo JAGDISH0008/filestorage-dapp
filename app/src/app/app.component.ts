@@ -58,16 +58,19 @@ export class AppComponent {
   }
 
   async upload() {
-    let ipfsData = await this.ipfsService.upload(this.fileBuffer);
-    this.toastrService.success("File uploaded successfully to IPFS");
-    this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', this.description).then(data => {
-      this.toastrService.success("Saved Hash to contract");
-    }).catch(err => {
-      this.toastrService.error("Error saving hash to contract");
-    }).finally(() => {
-      this.description = "";
-      this.getFiles();
-    })
+    this.fetchDetails();
+    if (this.appService.network?.name == 'rinkeby') {
+      let ipfsData = await this.ipfsService.upload(this.fileBuffer);
+      this.toastrService.success("File uploaded successfully to IPFS");
+      this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', this.description).then(data => {
+        this.toastrService.success("Saved Hash to contract");
+      }).catch(err => {
+        this.toastrService.error("Error saving hash to contract");
+      }).finally(() => {
+        this.description = "";
+        this.getFiles();
+      })
+    }
   }
   getFiles() {
     this.loading = true;
