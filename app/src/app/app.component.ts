@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'app';
   public fileBuffer: any;
   public utils = new Utils();
+  public description: string = "";
   myFiles: any[] = [];
   constructor(
     public appService: AppService,
@@ -59,12 +60,13 @@ export class AppComponent {
   async upload() {
     let ipfsData = await this.ipfsService.upload(this.fileBuffer);
     this.toastrService.success("File uploaded successfully to IPFS");
-    this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', 'test file').then(data => {
+    this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', this.description).then(data => {
       console.log(data);
       this.toastrService.success("Saved Hash to contract");
     }).catch(err => {
       this.toastrService.error("Error saving hash to contract");
     }).finally(() => {
+      this.description = "";
       this.getFiles();
     })
   }

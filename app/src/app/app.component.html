@@ -25,20 +25,24 @@
     </ul>
   </nav>
   <div class="d-flex justify-content-center">
-    <div class="card text-center mt-5" style="width: 18rem; height: 10rem;">
+    <div class="card text-center mt-5">
       <div class="card-body">
         <form class="formGroup">
-          <div class="form-control">
-            <input type="file" id="myFile" name="filename" (change)="handleFileInput($event.target.files)">
+          <div class="form-control m-1">
+            <label for="description"> Add Description : </label>
+            <div>
+              <input type="text" id="description" name="description" [(ngModel)]="description">
+            </div>
+          </div>
+          <div class="form-control m-1">
+            <label for="description"> Add File</label>
+            <div>
+              <input type="file" id="myFile" name="filename" (change)="handleFileInput($event.target.files)">
+            </div>
           </div>
           <div class="mt-2">
             <button class="btn btn-primary" (click)="upload()">
               <i class="fas fa-upload"></i> Upload
-            </button>
-          </div>
-          <div class="mt-2">
-            <button class="btn btn-primary" (click)="getFiles()">
-              <i class="fas fa-upload"></i> Get
             </button>
           </div>
 
@@ -48,8 +52,12 @@
   </div>
 
   <div class="card text-center mt-5">
-    <div class="card-body">
-      <table class="table">
+
+    <div class="card-body text-center">
+      <div class="d-flex flex-row-reverse m-1">
+        <button class="btn btn-primary btn-sm" (click)="getFiles()">Refresh</button>
+      </div>
+      <table class="table table-responsive">
         <thead>
           <tr>
             <th scope="col">#</th>
