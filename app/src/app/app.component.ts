@@ -61,7 +61,6 @@ export class AppComponent {
     let ipfsData = await this.ipfsService.upload(this.fileBuffer);
     this.toastrService.success("File uploaded successfully to IPFS");
     this.appService.uploadToContract(ipfsData.cid.toString(), 'test.txt', ipfsData.size, 'text/plain', this.description).then(data => {
-      console.log(data);
       this.toastrService.success("Saved Hash to contract");
     }).catch(err => {
       this.toastrService.error("Error saving hash to contract");
